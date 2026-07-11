@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ez.zaviox | GHSS EZHUR</title>
+    
+    <!-- Professional Modern Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Montserrat:wght@300;400;700&family=Space+Grotesk:wght@400;600&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-color: #0b0b0b;
+            --card-bg: #141414;
+            --accent-color: #ffffff;
+            --text-secondary: #8a8a8a;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: var(--bg-color);
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            overflow-x: hidden;
+        }
+
+        /* Header Setup */
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 25px;
+            background-color: #111111;
+            padding: 40px 20px 20px 20px;
+            border-bottom: 1px solid #222;
+        }
+
+        /* Logo with White Neon Light Effect */
+        .logo-animation {
+            width: 85px;
+            height: 85px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--accent-color);
+            box-shadow: 0 0 15px #ffffff, 0 0 30px rgba(255, 255, 255, 0.6), inset 0 0 10px rgba(255, 255, 255, 0.5);
+            animation: fillLogo 1.8s cubic-bezier(0.25, 1, 0.5, 1) forwards, smoothPulse 3s infinite ease-in-out 1.8s;
+        }
+
+        @keyframes fillLogo {
+            0% { transform: scale(0) rotate(-45deg); opacity: 0; filter: brightness(0) contrast(2); }
+            50% { transform: scale(1.1) rotate(5deg); opacity: 0.7; filter: brightness(0.5); }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; filter: brightness(1); }
+        }
+
+        @keyframes smoothPulse {
+            0% { transform: scale(1); box-shadow: 0 0 15px #ffffff, 0 0 30px rgba(255, 255, 255, 0.5); }
+            50% { transform: scale(1.04); box-shadow: 0 0 25px #ffffff, 0 0 45px rgba(255, 255, 255, 0.8), 0 0 60px rgba(255, 255, 255, 0.4); }
+            100% { transform: scale(1); box-shadow: 0 0 15px #ffffff, 0 0 30px rgba(255, 255, 255, 0.5); }
+        }
+
+        .title-text { text-align: left; }
+
+        h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            margin: 0;
+            font-size: 2.4rem;
+            letter-spacing: 3px;
+            white-space: nowrap;
+            overflow: hidden;
+            width: 100%;
+            border-right: 3px solid var(--accent-color);
+            animation: typewriter 2s steps(30, end) forwards, blink cursor 0.75s step-end infinite;
+        }
+
+        @keyframes typewriter { from { width: 0; } to { width: 100%; border-right-color: transparent; } }
+        @keyframes blink { from, to { border-color: transparent } 50% { border-color: var(--accent-color); } }
+
+        .subtitle-container { overflow: hidden; }
+        p.subtitle {
+            margin: 6px 0 0 0;
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            font-weight: 300;
+            letter-spacing: 1px;
+            transform: translateY(100%);
+            animation: slideUp 1s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+            animation-delay: 1.5s;
+        }
+
+        .school-badge {
+            font-size: 0.9rem;
+            letter-spacing: 4px;
+            color: #ff3333;
+            margin-top: 4px;
+            font-weight: 600;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards 2s;
+        }
+
+        @keyframes slideUp { to { transform: translateY(0); } }
+        @keyframes fadeIn { to { opacity: 1; } }
+
+        /* 4 Status Info Boxes */
+        .status-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 15px;
+            max-width: 700px;
+            margin: 30px auto 10px auto;
+            padding: 0 20px;
+        }
+
+        .status-box {
+            background-color: #161616;
+            border: 1px solid #252525;
+            padding: 14px;
+            border-radius: 20px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            color: #ffffff;
+            transition: all 0.3s ease;
+        }
+
+        .status-box.premium-font {
+            font-family: 'Cinzel', serif;
+            letter-spacing: 2px;
+            font-weight: 800;
+            cursor: pointer;
+            border-color: #444;
+        }
+        
+        .status-box.premium-font:hover {
+            background-color: #ffffff;
+            color: #000000;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+        }
+
+        .status-box.soon { color: #555555; font-style: italic; }
+
+        /* Reference Text Labels */
+        .batch-label { font-size: 1.1rem; color: var(--text-secondary); margin: 15px 0; letter-spacing: 1px; }
+        .follow-label { font-size: 0.85rem; font-weight: 700; letter-spacing: 3px; margin-top: 25px; color: #666; }
+
+        /* Instagram Button Group Styling */
+        .instagram-neon-wrap {
+            display: inline-block;
+            padding: 2px;
+            border-radius: 32px;
+            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+            box-shadow: 0 0 15px rgba(220, 39, 67, 0.4), 0 0 25px rgba(188, 24, 136, 0.2);
+            margin: 10px auto 15px auto;
+            transition: all 0.3s ease;
+        }
+
+        .instagram-neon-wrap:hover {
+            box-shadow: 0 0 25px rgba(220, 39, 67, 0.8), 0 0 40px rgba(188, 24, 136, 0.5);
+            transform: translateY(-3px);
+        }
+
+        .instagram-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background-color: #000000;
+            color: #ffffff;
+            text-decoration: none;
+            padding: 13px 35px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 1.05rem;
+            letter-spacing: 1px;
+        }
+
+        .instagram-btn i {
+            font-size: 1.2rem;
+            background: linear-gradient(45deg, #f09433, #dc2743, #bc1888);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Portfolio Gallery - Brick Layout Pattern */
+        .gallery-container {
+            max-width: 900px;
+            margin: 40px auto 40px auto;
+            padding: 0 20px;
+        }
+
+        .grid { display: flex; flex-direction: column; gap: 0px; }
+
+        .card {
+            width: 65%;
+            background-color: var(--card-bg);
+            border: 1px solid #222;
+            overflow: hidden;
+            transition: transform 0.4s ease, border-color 0.4s ease;
+        }
+
+        .card:nth-child(odd) { align-self: flex-start; border-radius: 24px 24px 0px 24px; }
+        .card:nth-child(even) { align-self: flex-end; border-radius: 24px 24px 24px 0px; margin-top: -1px; }
+
+        .card:hover { transform: scale(1.02); border-color: #555; z-index: 10; }
+
+        .card img { width: 100%; height: 230px; object-fit: cover; display: block; }
+
+        @media (max-width: 600px) {
+            .card { width: 85%; }
+            .card img { height: 160px; }
+        }
+
+        /* ================= PREMIUM INSTAGRAM PROFILE COMPONENT ================= */
+        .insta-profile-card {
+            max-width: 550px;
+            margin: 60px auto 40px auto;
+            background-color: #121212;
+            border: 1px solid #262626;
+            border-radius: 24px;
+            padding: 30px;
+            text-align: left;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .insta-profile-header {
+            display: flex;
+            align-items: center;
+            gap: 35px;
+            margin-bottom: 20px;
+        }
+
+        /* White Neon Glow Styling Layer Applied to DP ring */
+        .insta-pfp-wrapper-neon {
+            position: relative;
+            width: 92px;
+            height: 92px;
+            border-radius: 50%;
+            border: 2px solid var(--accent-color);
+            box-shadow: 0 0 14px #ffffff, 0 0 25px rgba(255, 255, 255, 0.4);
+            animation: smoothPulse 3s infinite ease-in-out;
+            flex-shrink: 0;
+        }
+
+        .insta-pfp-wrapper-neon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            display: block;
+        }
+
+        .insta-stats-container {
+            display: flex;
+            gap: 25px;
+            flex-grow: 1;
+            justify-content: space-around;
+            text-align: center;
+        }
+
+        .stat-item-val {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #ffffff;
+            display: block;
+        }
+
+        .stat-item-lbl {
+            font-size: 0.85rem;
+            color: #a8a8a8;
+        }
+
+        .insta-profile-bio {
+            padding-left: 5px;
+        }
+
+        .insta-username-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .insta-profile-handle {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin: 0;
+        }
+
+        .verified-badge {
+            color: #0095f6;
+            font-size: 1rem;
+        }
+
+        .insta-full-name {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: #f5f5f5;
+            margin: 0 0 6px 0;
+        }
+
+        .insta-bio-text {
+            font-size: 0.9rem;
+            color: #dddddd;
+            line-height: 1.5;
+            margin: 0 0 20px 0;
+            white-space: pre-line;
+        }
+
+        .insta-follow-action-btn {
+            display: block;
+            width: 100%;
+            background-color: #0095f6;
+            color: #ffffff;
+            text-align: center;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            padding: 10px 0;
+            border-radius: 10px;
+            transition: background-color 0.2s ease;
+        }
+
+        .insta-follow-action-btn:hover {
+            background-color: #1877f2;
+        }
+
+        @media(max-width: 480px) {
+            .insta-profile-card { margin: 40px 15px; padding: 20px; }
+            .insta-profile-header { gap: 15px; }
+            .insta-pfp-wrapper-neon { width: 75px; height: 75px; }
+            .stat-item-val { font-size: 1.1rem; }
+            .stat-item-lbl { font-size: 0.75rem; }
+        }
+
+        /* ================= NEW PILLER INTERFACE LAYER ================= */
+        .piller-interface {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: var(--bg-color);
+            z-index: 100;
+            overflow-y: auto;
+            display: none;
+            padding-bottom: 60px;
+        }
+
+        .piller-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 30px 40px;
+            background-color: #111111;
+            border-bottom: 1px solid #222;
+        }
+
+        .piller-title {
+            font-family: 'Cinzel', serif;
+            font-size: 2.2rem;
+            font-weight: 800;
+            letter-spacing: 4px;
+            color: #ffffff;
+            margin: 0;
+            text-align: left;
+        }
+
+        .back-btn {
+            background-color: #ff3333;
+            color: #ffffff;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 14px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 51, 51, 0.3);
+        }
+
+        .back-btn:hover {
+            background-color: #cc0000;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 51, 51, 0.5);
+        }
+
+        .piller-content-wrapper {
+            max-width: 900px;
+            margin: 40px auto 0 auto;
+            padding: 0 20px;
+        }
+
+        .section-headline {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            color: var(--text-secondary);
+            margin: 40px 0 20px 0;
+            text-align: left;
+            border-left: 3px solid #ff3333;
+            padding-left: 12px;
+        }
+
+        .title-image-container {
+            width: 100%;
+            height: 350px;
+            border-radius: 24px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            border: 1px solid #222;
+        }
+
+        .title-image-container img { width: 100%; height: 100%; object-fit: cover; }
+
+        .piller-grid { display: flex; flex-direction: column; gap: 0px; margin-bottom: 40px; }
+
+        .piller-card {
+            width: 65%;
+            background-color: var(--card-bg);
+            border: 1px solid #222;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .piller-card:nth-child(odd) { align-self: flex-start; border-radius: 24px 24px 0px 24px; }
+        .piller-card:nth-child(even) { align-self: flex-end; border-radius: 24px 24px 24px 0px; margin-top: -1px; }
+
+        .piller-card:hover { transform: scale(1.02); border-color: #ff3333; z-index: 10; }
+        
+        .piller-card img, .piller-card video { width: 100%; height: 200px; object-fit: cover; display: block; }
+
+        .fullscreen-viewer {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            z-index: 200;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .fullscreen-viewer img, .fullscreen-viewer video {
+            max-width: 90%; max-height: 85%;
+            border-radius: 8px;
+            box-shadow: 0 0 30px rgba(255,255,255,0.1);
+        }
+
+        .close-viewer {
+            position: absolute;
+            top: 30px; right: 40px;
+            color: #fff; font-size: 2.5rem;
+            cursor: pointer;
+        }
+        .close-viewer:hover { color: #ff3333; }
+
+        /* Footer Section Styling */
+        footer {
+            margin-top: 40px;
+            padding: 30px 20px;
+            background-color: #111111;
+            border-top: 1px solid #222;
+        }
+
+        footer p.copyright { margin: 0 0 10px 0; color: #444; font-size: 0.9rem; }
+        footer p.landscape-text {
+            margin: 0; color: #777; font-size: 1rem; letter-spacing: 2px; font-weight: 600; text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- MAIN HOME PAGE INTERFACE -->
+    <div id="home-view">
+        <header>
+            <img src="model1.jpg" alt="Ez.zaviox Logo" class="logo-animation">
+            
+            <div class="title-text">
+                <h1>Ez.zaviox</h1>
+                <div class="subtitle-container">
+                    <p class="subtitle"></p>
+                </div>
+                <div class="school-badge">GHSS EZHUR</div>
+            </div>
+        </header>
+
+        <div class="status-container">
+            <div class="status-box premium-font" onclick="openPillerView()">PILLER ❤️‍🔥</div>
+            <div class="status-box premium-font">SENIORS 🙌🏻</div>
+            <div class="status-box soon">soon..</div>
+            <div class="status-box soon">soon..</div>
+        </div>
+
+        <div class="batch-label">Official +1 2026-28</div>
+        <div class="follow-label">DO FOLLOW</div>
+        
+        <div class="instagram-neon-wrap">
+            <a href="https://www.instagram.com/ez.zaviox?igsh=aHJuZTNsM21teWJt" class="instagram-btn" target="_blank">
+                <i class="fab fa-instagram"></i> ez.zaviox
+            </a>
+        </div>
+
+        <!-- Custom Caption Subtitle Added Under Instagram Box Button -->
+        <div style="font-family: 'Space Grotesk', sans-serif; font-size: 1.3rem; font-weight: 600; letter-spacing: 6px; color: #ffffff; text-transform: uppercase; margin: -10px auto 35px auto;">
+            
+        
+          +1 Captures
+     
+      </div>
+
+        <!-- Showcase Blocks (4 Boxes) -->
+        <div class="gallery-container">
+            <div class="grid">
+                <div class="card"><img src="model2.jpg" alt="Showcase 1"></div>
+                <div class="card"><img src="model3.jpg" alt="Showcase 2"></div>
+                <div class="card"><img src="model4.jpg" alt="Showcase 3"></div>
+                <div class="card"><img src="model5.jpg" alt="Showcase 4"></div>
+            </div>
+        </div>
+
+        <!-- ================= EMBEDDED INSTAGRAM PROFILE SECTION ================= -->
+        <div class="insta-profile-card">
+            <div class="insta-profile-header">
+                <!-- Swapped to Premium White Neon Glow Circle Ring -->
+                <div class="insta-pfp-wrapper-neon">
+                    <img src="model1.jpg" alt="ez.zaviox profile photo">
+                </div>
+                <div class="insta-stats-container">
+                    <div class="stat-item">
+                        <span class="stat-item-val">-</span>
+                        <span class="stat-item-lbl">posts</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-item-val">-</span>
+                        <span class="stat-item-lbl">followers</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-item-val">-</span>
+                        <span class="stat-item-lbl">following</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="insta-profile-bio">
+                <div class="insta-username-row">
+                    <h3 class="insta-profile-handle">ez.zaviox</h3>
+                    <i class="fas fa-badge-check verified-badge" title="Verified Profile"></i>
+                </div>
+                <p class="insta-full-name">Ez.zaviox | GHSS EZHUR</p>
+                <p class="insta-bio-text">GHSS EZHUR
+2026-28
+സ്നേഹം മാത്രം
+അപ്പൊ നമ്മൾ തൊടങ്ങി കേട്ടോ</p>
+                
+                <a href="https://www.instagram.com/ez.zaviox?igsh=aHJuZTNsM21teWJt" class="insta-follow-action-btn" target="_blank">Follow</a>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- ================= PREMIUM PILLER VIEW INTERFACE LAYER ================= -->
+    <div id="piller-view" class="piller-interface">
+        <div class="piller-header">
+            <h2 class="piller-title">PILLER</h2>
+            <button class="back-btn" onclick="closePillerView()"><i class="fas fa-arrow-left"></i> Go Back</button>
+        </div>
+
+        <div class="piller-content-wrapper">
+            <div class="title-image-container">
+                <img src="piller_title.jpg" alt="Piller Featured Title Look">
+            </div>
+
+            <div class="section-headline">Photos</div>
+            <div class="piller-grid">
+                <div class="piller-card" onclick="viewFullscreen(this, 'img')"><img src="piller_img1.jpg" alt="Piller Look 1"></div>
+                <div class="piller-card" onclick="viewFullscreen(this, 'img')"><img src="piller_img2.jpg" alt="Piller Look 2"></div>
+                <div class="piller-card" onclick="viewFullscreen(this, 'img')"><img src="piller_img3.jpg" alt="Piller Look 3"></div>
+                <div class="piller-card" onclick="viewFullscreen(this, 'img')"><img src="piller_img4.jpg" alt="Piller Look 4"></div>
+            </div>
+
+            <div class="section-headline">Videos</div>
+            <div class="piller-grid">
+                <div class="piller-card" onclick="viewFullscreen(this, 'video')"><video src="piller_video1.mp4" muted loop playsinline></video></div>
+                <div class="piller-card" onclick="viewFullscreen(this, 'video')"><video src="piller_video2.mp4" muted loop playsinline></video></div>
+                <div class="piller-card" onclick="viewFullscreen(this, 'video')"><video src="piller_video3.mp4" muted loop playsinline></video></div>
+                <div class="piller-card" onclick="viewFullscreen(this, 'video')"><video src="piller_video4.mp4" muted loop playsinline></video></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FULLSCREEN MODAL LIGHTBOX -->
+    <div id="mediaViewer" class="fullscreen-viewer" onclick="closeFullscreen()">
+        <span class="close-viewer">&times;</span>
+        <div id="viewerContent" onclick="event.stopPropagation()"></div>
+    </div>
+
+
+    <footer>
+        <p class="copyright">&copy; 2026 Model Management. All Rights Reserved.</p>
+        <p class="landscape-text">2027-28 model ghss ezhur piller</p>
+    </footer>
+
+    <!-- INTERACTIVE SCRIPT CONTROLS -->
+    <script>
+        function openPillerView() {
+            document.getElementById('home-view').style.display = 'none';
+            document.getElementById('piller-view').style.display = 'block';
+            window.scrollTo(0, 0);
+        }
+
+        function closePillerView() {
+            document.getElementById('piller-view').style.display = 'none';
+            document.getElementById('home-view').style.display = 'block';
+            window.scrollTo(0, 0);
+        }
+
+        function viewFullscreen(cardElement, type) {
+            const viewer = document.getElementById('mediaViewer');
+            const content = document.getElementById('viewerContent');
+            
+            if (type === 'img') {
+                const src = cardElement.querySelector('img').src;
+                content.innerHTML = `<img src="${src}" alt="Fullscreen View">`;
+            } else if (type === 'video') {
+                const src = cardElement.querySelector('video').src;
+                content.innerHTML = `<video src="${src}" controls autoplay loop style="width:100%; max-height:85vh;"></video>`;
+            }
+            
+            viewer.style.display = 'flex';
+        }
+
+        function closeFullscreen() {
+            const viewer = document.getElementById('mediaViewer');
+            document.getElementById('viewerContent').innerHTML = '';
+            viewer.style.display = 'none';
+        }
+    </script>
+</body>
+</html>
