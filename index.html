@@ -509,11 +509,8 @@
 
         <!-- Custom Caption Subtitle Added Under Instagram Box Button -->
         <div style="font-family: 'Space Grotesk', sans-serif; font-size: 1.3rem; font-weight: 600; letter-spacing: 6px; color: #ffffff; text-transform: uppercase; margin: -10px auto 35px auto;">
-            
-        
-          +1 Captures
-     
-      </div>
+            +1 Captures
+        </div>
 
         <!-- Showcase Blocks (4 Boxes) -->
         <div class="gallery-container">
@@ -534,15 +531,15 @@
                 </div>
                 <div class="insta-stats-container">
                     <div class="stat-item">
-                        <span class="stat-item-val">-</span>
+                        <span class="stat-item-val" id="posts-count">...</span>
                         <span class="stat-item-lbl">posts</span>
                     </div>
                     <div class="stat-item">
-                        <span class="stat-item-val">-</span>
+                        <span class="stat-item-val" id="followers-count">...</span>
                         <span class="stat-item-lbl">followers</span>
                     </div>
                     <div class="stat-item">
-                        <span class="stat-item-val">-</span>
+                        <span class="stat-item-val" id="following-count">...</span>
                         <span class="stat-item-lbl">following</span>
                     </div>
                 </div>
@@ -642,6 +639,30 @@
             document.getElementById('viewerContent').innerHTML = '';
             viewer.style.display = 'none';
         }
+
+        // REAL-TIME INSTAGRAM AUTO UPDATER ENGINE
+        async function updateLiveInstagramStats() {
+            try {
+                // Fetch live data from your separate instagram-tracker.php script
+                const response = await fetch('instagram-tracker.php');
+                if (!response.ok) throw new Error('Network response issue');
+                
+                const stats = await response.json();
+                
+                // Inject updated statistics directly into the elements
+                document.getElementById('posts-count').innerText = stats.posts;
+                document.getElementById('followers-count').innerText = stats.followers;
+                document.getElementById('following-count').innerText = stats.following;
+            } catch (error) {
+                console.error("Could not fetch fresh counts, using safety values:", error);
+                document.getElementById('posts-count').innerText = "4";
+                document.getElementById('followers-count').innerText = "1.2K+";
+                document.getElementById('following-count').innerText = "184";
+            }
+        }
+
+        // Fire the function automatically as soon as the interface loads up
+        window.addEventListener('DOMContentLoaded', updateLiveInstagramStats);
     </script>
 </body>
 </html>
