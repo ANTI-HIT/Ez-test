@@ -31,15 +31,20 @@
             overflow-x: hidden;
         }
 
-        /* Header Setup */
-        header {
+        /* Adjusted to align elements cleanly to the left side */
+        header, .bottom-brand-header {
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 25px;
+            justify-content: flex-start; /* Aligns logo and text to the left */
+            gap: 20px;
             background-color: #111111;
-            padding: 40px 20px 20px 20px;
+            padding: 40px 30px 20px 30px; /* Added left-padding for breathing room */
             border-bottom: 1px solid #222;
+        }
+
+        .bottom-brand-header {
+            border-top: 1px solid #222;
+            margin-top: 60px;
         }
 
         /* Logo with White Neon Light Effect */
@@ -51,6 +56,7 @@
             border: 2px solid var(--accent-color);
             box-shadow: 0 0 15px #ffffff, 0 0 30px rgba(255, 255, 255, 0.6), inset 0 0 10px rgba(255, 255, 255, 0.5);
             animation: fillLogo 1.8s cubic-bezier(0.25, 1, 0.5, 1) forwards, smoothPulse 3s infinite ease-in-out 1.8s;
+            flex-shrink: 0;
         }
 
         @keyframes fillLogo {
@@ -65,18 +71,27 @@
             100% { transform: scale(1); box-shadow: 0 0 15px #ffffff, 0 0 30px rgba(255, 255, 255, 0.5); }
         }
 
-        .title-text { text-align: left; }
+        .title-text { 
+            text-align: left;
+            flex: 1; /* Allows text block to safely adjust container space */
+            min-width: 0; /* Keeps layout contained */
+        }
 
-        h1 {
+        /* Optimized font configurations & clear typographic sizes */
+        h1, h2.section-main-title {
             font-family: 'Montserrat', sans-serif;
             font-weight: 700;
             margin: 0;
-            font-size: 2.4rem;
-            letter-spacing: 3px;
-            white-space: nowrap;
-            overflow: hidden;
-            width: 100%;
+            font-size: 2.4rem; /* Perfect striking size for left-alignment */
+            letter-spacing: 1px;
+            color: #ffffff;
+            display: inline-block;
+            word-break: break-word; /* Prevents viewport breaking cuts */
+        }
+        
+        h1 {
             border-right: 3px solid var(--accent-color);
+            white-space: nowrap;
             animation: typewriter 2s steps(30, end) forwards, blink cursor 0.75s step-end infinite;
         }
 
@@ -96,11 +111,11 @@
         }
 
         .school-badge {
-            font-size: 0.9rem;
-            letter-spacing: 4px;
+            font-size: 0.95rem;
+            letter-spacing: 3px;
             color: #ff3333;
-            margin-top: 4px;
-            font-weight: 600;
+            margin-top: 5px;
+            font-weight: 700;
             opacity: 0;
             animation: fadeIn 1s ease forwards 2s;
         }
@@ -108,12 +123,9 @@
         @keyframes slideUp { to { transform: translateY(0); } }
         @keyframes fadeIn { to { opacity: 1; } }
 
-        /* 4 Status Info Boxes */
+        /* Full Width Rectangle Container for Piller Button */
         .status-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-            gap: 15px;
-            max-width: 700px;
+            max-width: 550px;
             margin: 30px auto 10px auto;
             padding: 0 20px;
         }
@@ -121,30 +133,47 @@
         .status-box {
             background-color: #161616;
             border: 1px solid #252525;
-            padding: 14px;
+            padding: 16px;
             border-radius: 20px;
-            font-size: 0.95rem;
+            font-size: 1.05rem;
             font-weight: 600;
             letter-spacing: 1px;
             color: #ffffff;
             transition: all 0.3s ease;
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
         }
 
         .status-box.premium-font {
             font-family: 'Cinzel', serif;
-            letter-spacing: 2px;
+            letter-spacing: 4px;
             font-weight: 800;
             cursor: pointer;
             border-color: #444;
+            animation: continuousTextBlink 1.4s infinite ease-in-out;
+        }
+        
+        @keyframes continuousTextBlink {
+            0%, 100% {
+                color: #ffffff;
+                text-shadow: 0 0 4px rgba(255, 255, 255, 0.2);
+                opacity: 1;
+            }
+            50% {
+                color: #ff3333;
+                text-shadow: 0 0 15px #ff3333, 0 0 30px rgba(255, 51, 51, 0.6);
+                opacity: 0.5;
+            }
         }
         
         .status-box.premium-font:hover {
             background-color: #ffffff;
-            color: #000000;
+            color: #000000 !important;
+            text-shadow: none !important;
             box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+            animation-play-state: paused;
         }
-
-        .status-box.soon { color: #555555; font-style: italic; }
 
         /* Reference Text Labels */
         .batch-label { font-size: 1.1rem; color: var(--text-secondary); margin: 15px 0; letter-spacing: 1px; }
@@ -188,7 +217,7 @@
             -webkit-text-fill-color: transparent;
         }
 
-        /* Portfolio Gallery - Brick Layout Pattern */
+        /* Portfolio Gallery */
         .gallery-container {
             max-width: 900px;
             margin: 40px auto 40px auto;
@@ -203,24 +232,44 @@
             border: 1px solid #222;
             overflow: hidden;
             transition: transform 0.4s ease, border-color 0.4s ease;
+            opacity: 0;
+            transform: translateY(80px) scale(0.95);
         }
 
         .card:nth-child(odd) { align-self: flex-start; border-radius: 24px 24px 0px 24px; }
         .card:nth-child(even) { align-self: flex-end; border-radius: 24px 24px 24px 0px; margin-top: -1px; }
 
-        .card:hover { transform: scale(1.02); border-color: #555; z-index: 10; }
+        .card.build-brick {
+            animation: dropBrickLayout 0.75s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+        }
 
+        @keyframes dropBrickLayout {
+            0% { opacity: 0; transform: translateY(80px) scale(0.95); filter: blur(2px); }
+            100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+        }
+
+        .card.build-brick:hover { transform: scale(1.02); border-color: #555; z-index: 10; }
         .card img { width: 100%; height: 230px; object-fit: cover; display: block; }
 
         @media (max-width: 600px) {
+            header, .bottom-brand-header {
+                padding: 35px 20px 20px 20px;
+                gap: 15px;
+            }
+            .logo-animation {
+                width: 75px;
+                height: 75px;
+            }
             .card { width: 85%; }
             .card img { height: 160px; }
+            h1 { font-size: 1.8rem; }
+            h2.section-main-title { font-size: 1.35rem; } /* Safely formats long usernames on phone viewports */
         }
 
-        /* ================= PREMIUM INSTAGRAM PROFILE COMPONENT ================= */
+        /* PREMIUM INSTAGRAM PROFILE COMPONENT */
         .insta-profile-card {
             max-width: 550px;
-            margin: 60px auto 40px auto;
+            margin: 30px auto 40px auto;
             background-color: #121212;
             border: 1px solid #262626;
             border-radius: 24px;
@@ -236,7 +285,6 @@
             margin-bottom: 20px;
         }
 
-        /* White Neon Glow Styling Layer Applied to DP ring */
         .insta-pfp-wrapper-neon {
             position: relative;
             width: 92px;
@@ -271,21 +319,9 @@
             display: block;
         }
 
-        .stat-item-lbl {
-            font-size: 0.85rem;
-            color: #a8a8a8;
-        }
-
-        .insta-profile-bio {
-            padding-left: 5px;
-        }
-
-        .insta-username-row {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 8px;
-        }
+        .stat-item-lbl { font-size: 0.85rem; color: #a8a8a8; }
+        .insta-profile-bio { padding-left: 5px; }
+        .insta-username-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
 
         .insta-profile-handle {
             font-size: 1.2rem;
@@ -294,18 +330,9 @@
             margin: 0;
         }
 
-        .verified-badge {
-            color: #0095f6;
-            font-size: 1rem;
-        }
-
-        .insta-full-name {
-            font-weight: 600;
-            font-size: 0.95rem;
-            color: #f5f5f5;
-            margin: 0 0 6px 0;
-        }
-
+        .verified-badge { color: #0095f6; font-size: 1rem; }
+        .insta-full-name { font-weight: 600; font-size: 0.95rem; color: #f5f5f5; margin: 0 0 6px 0; }
+        
         .insta-bio-text {
             font-size: 0.9rem;
             color: #dddddd;
@@ -328,19 +355,17 @@
             transition: background-color 0.2s ease;
         }
 
-        .insta-follow-action-btn:hover {
-            background-color: #1877f2;
-        }
+        .insta-follow-action-btn:hover { background-color: #1877f2; }
 
         @media(max-width: 480px) {
-            .insta-profile-card { margin: 40px 15px; padding: 20px; }
+            .insta-profile-card { margin: 30px 15px; padding: 20px; }
             .insta-profile-header { gap: 15px; }
             .insta-pfp-wrapper-neon { width: 75px; height: 75px; }
             .stat-item-val { font-size: 1.1rem; }
             .stat-item-lbl { font-size: 0.75rem; }
         }
 
-        /* ================= NEW PILLER INTERFACE LAYER ================= */
+        /* PREMIUM PILLER INTERFACE LAYER */
         .piller-interface {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -371,23 +396,26 @@
         }
 
         .back-btn {
-            background-color: #ff3333;
-            color: #ffffff;
+            background-color: #baffc9;
+            color: #0b0b0b;
             border: none;
             padding: 12px 28px;
             border-radius: 14px;
             font-family: 'Space Grotesk', sans-serif;
-            font-weight: 600;
+            font-weight: 700;
             font-size: 1rem;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(255, 51, 51, 0.3);
+            box-shadow: 0 4px 15px rgba(186, 255, 201, 0.3);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .back-btn:hover {
-            background-color: #cc0000;
+            background-color: #98e6aa;
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(255, 51, 51, 0.5);
+            box-shadow: 0 6px 20px rgba(186, 255, 201, 0.5);
         }
 
         .piller-content-wrapper {
@@ -404,7 +432,7 @@
             color: var(--text-secondary);
             margin: 40px 0 20px 0;
             text-align: left;
-            border-left: 3px solid #ff3333;
+            border-left: 3px solid #baffc9;
             padding-left: 12px;
         }
 
@@ -418,7 +446,6 @@
         }
 
         .title-image-container img { width: 100%; height: 100%; object-fit: cover; }
-
         .piller-grid { display: flex; flex-direction: column; gap: 0px; margin-bottom: 40px; }
 
         .piller-card {
@@ -428,13 +455,18 @@
             overflow: hidden;
             cursor: pointer;
             transition: transform 0.3s ease, border-color 0.3s ease;
+            opacity: 0;
+            transform: translateY(80px) scale(0.95);
         }
 
         .piller-card:nth-child(odd) { align-self: flex-start; border-radius: 24px 24px 0px 24px; }
         .piller-card:nth-child(even) { align-self: flex-end; border-radius: 24px 24px 24px 0px; margin-top: -1px; }
 
-        .piller-card:hover { transform: scale(1.02); border-color: #ff3333; z-index: 10; }
-        
+        .piller-card.build-brick {
+            animation: dropBrickLayout 0.75s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+        }
+
+        .piller-card.build-brick:hover { transform: scale(1.02); border-color: #baffc9; z-index: 10; }
         .piller-card img, .piller-card video { width: 100%; height: 200px; object-fit: cover; display: block; }
 
         .fullscreen-viewer {
@@ -459,9 +491,8 @@
             color: #fff; font-size: 2.5rem;
             cursor: pointer;
         }
-        .close-viewer:hover { color: #ff3333; }
+        .close-viewer:hover { color: #baffc9; }
 
-        /* Footer Section Styling */
         footer {
             margin-top: 40px;
             padding: 30px 20px;
@@ -481,7 +512,6 @@
     <div id="home-view">
         <header>
             <img src="model1.jpg" alt="Ez.zaviox Logo" class="logo-animation">
-            
             <div class="title-text">
                 <h1>Ez.zaviox</h1>
                 <div class="subtitle-container">
@@ -492,10 +522,9 @@
         </header>
 
         <div class="status-container">
-            <div class="status-box premium-font" onclick="openPillerView()">PILLER ❤️‍🔥</div>
-            <div class="status-box premium-font">SENIORS 🙌🏻</div>
-            <div class="status-box soon">soon..</div>
-            <div class="status-box soon">soon..</div>
+            <div class="status-box premium-font" onclick="openPillerView()">PULLER ❤️‍🔥
+          
+      </div>
         </div>
 
         <div class="batch-label">Official +1 2026-28</div>
@@ -507,9 +536,8 @@
             </a>
         </div>
 
-        <!-- Custom Caption Subtitle Added Under Instagram Box Button -->
         <div style="font-family: 'Space Grotesk', sans-serif; font-size: 1.3rem; font-weight: 600; letter-spacing: 6px; color: #ffffff; text-transform: uppercase; margin: -10px auto 35px auto;">
-            +1 Captures
+          +1 Captures
         </div>
 
         <!-- Showcase Blocks (4 Boxes) -->
@@ -522,24 +550,76 @@
             </div>
         </div>
 
-        <!-- ================= EMBEDDED INSTAGRAM PROFILE SECTION ================= -->
+        <!-- CLONED BRAND HEADER AT THE WEB BOTTOM (Now clean Left Aligned) -->
+        <div class="bottom-brand-header">
+            <img src="logo2.jpg" alt="Logo 2" class="logo-animation">
+            <div class="title-text">
+                <h2 class="section-main-title">ashaandha.yugam</h2>
+                <div class="school-badge" style="color: #ff3333; opacity: 1; animation: none;">G H S S</div>
+            </div>
+        </div>
+
+        <div class="follow-label" style="margin-top: 35px;">DO FOLLOW</div>
+        
+        <div class="instagram-neon-wrap">
+            <a href="https://www.instagram.com/ashaandha.yugam?igsh=NWJ0ejA3cDJucG0y" class="instagram-btn" target="_blank">
+                <i class="fab fa-instagram"></i> ashaandha.yugam
+            </a>
+        </div>
+
+        <!-- Embedded Second Instagram Profile Box Component -->
         <div class="insta-profile-card">
             <div class="insta-profile-header">
-                <!-- Swapped to Premium White Neon Glow Circle Ring -->
+                <div class="insta-pfp-wrapper-neon">
+                    <img src="logo2.jpg" alt="ashaandha.yugam profile photo">
+                </div>
+                <div class="insta-stats-container">
+                    <div class="stat-item">
+                        <span class="stat-item-val">-</span>
+                        <span class="stat-item-lbl">posts</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-item-val">-</span>
+                        <span class="stat-item-lbl">followers</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-item-val">-</span>
+                        <span class="stat-item-lbl">following</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="insta-profile-bio">
+                <div class="insta-username-row">
+                    <h3 class="insta-profile-handle">ashaandha.yugam</h3>
+                    <i class="fas fa-badge-check verified-badge" title="Verified Profile"></i>
+                </div>
+                <p class="insta-full-name">Ashaandha Yugam</p>
+                <p class="insta-bio-text">community
+              main @ez.zaviox</p>
+                
+                <a href="https://www.instagram.com/ashaandha.yugam?igsh=NWJ0ejA3cDJucG0y" class="insta-follow-action-btn" target="_blank">Follow</a>
+            </div>
+        </div>
+
+        <!-- EMBEDDED EZ.ZAVIOX INSTAGRAM PROFILE SECTION -->
+        <div style="font-family: 'Space Grotesk', sans-serif; font-size: 0.85rem; font-weight: 700; letter-spacing: 3px; color: #666; margin-top: 60px; text-transform: uppercase;">Main </div>
+        <div class="insta-profile-card">
+            <div class="insta-profile-header">
                 <div class="insta-pfp-wrapper-neon">
                     <img src="model1.jpg" alt="ez.zaviox profile photo">
                 </div>
                 <div class="insta-stats-container">
                     <div class="stat-item">
-                        <span class="stat-item-val" id="posts-count">...</span>
+                        <span class="stat-item-val">-</span>
                         <span class="stat-item-lbl">posts</span>
                     </div>
                     <div class="stat-item">
-                        <span class="stat-item-val" id="followers-count">...</span>
+                        <span class="stat-item-val">-</span>
                         <span class="stat-item-lbl">followers</span>
                     </div>
                     <div class="stat-item">
-                        <span class="stat-item-val" id="following-count">...</span>
+                        <span class="stat-item-val">-</span>
                         <span class="stat-item-lbl">following</span>
                     </div>
                 </div>
@@ -563,11 +643,13 @@
     </div>
 
 
-    <!-- ================= PREMIUM PILLER VIEW INTERFACE LAYER ================= -->
+    <!-- PREMIUM PILLER VIEW INTERFACE LAYER -->
     <div id="piller-view" class="piller-interface">
         <div class="piller-header">
-            <h2 class="piller-title">PILLER</h2>
-            <button class="back-btn" onclick="closePillerView()"><i class="fas fa-arrow-left"></i> Go Back</button>
+            <h2 class="piller-title">PULLER</h2>
+            <button class="back-btn" onclick="closePillerView()">
+                <i class="fas fa-sign-out-alt"></i> Exit
+            </button>
         </div>
 
         <div class="piller-content-wrapper">
@@ -599,18 +681,17 @@
         <div id="viewerContent" onclick="event.stopPropagation()"></div>
     </div>
 
-
     <footer>
         <p class="copyright">&copy; 2026 Model Management. All Rights Reserved.</p>
         <p class="landscape-text">2027-28 model ghss ezhur piller</p>
     </footer>
 
-    <!-- INTERACTIVE SCRIPT CONTROLS -->
     <script>
         function openPillerView() {
             document.getElementById('home-view').style.display = 'none';
             document.getElementById('piller-view').style.display = 'block';
             window.scrollTo(0, 0);
+            window.dispatchEvent(new Event('scroll'));
         }
 
         function closePillerView() {
@@ -640,29 +721,28 @@
             viewer.style.display = 'none';
         }
 
-        // REAL-TIME INSTAGRAM AUTO UPDATER ENGINE
-        async function updateLiveInstagramStats() {
-            try {
-                // Fetch live data from your separate instagram-tracker.php script
-                const response = await fetch('instagram-tracker.php');
-                if (!response.ok) throw new Error('Network response issue');
-                
-                const stats = await response.json();
-                
-                // Inject updated statistics directly into the elements
-                document.getElementById('posts-count').innerText = stats.posts;
-                document.getElementById('followers-count').innerText = stats.followers;
-                document.getElementById('following-count').innerText = stats.following;
-            } catch (error) {
-                console.error("Could not fetch fresh counts, using safety values:", error);
-                document.getElementById('posts-count').innerText = "4";
-                document.getElementById('followers-count').innerText = "1.2K+";
-                document.getElementById('following-count').innerText = "184";
-            }
-        }
+        document.addEventListener("DOMContentLoaded", function () {
+            const animatableItems = document.querySelectorAll(".gallery-container .card, .piller-grid .piller-card");
+            
+            const observerOptions = {
+                root: null,
+                threshold: 0.1
+            };
 
-        // Fire the function automatically as soon as the interface loads up
-        window.addEventListener('DOMContentLoaded', updateLiveInstagramStats);
+            const brickObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("build-brick");
+                    } else {
+                        entry.target.classList.remove("build-brick");
+                    }
+                });
+            }, observerOptions);
+
+            animatableItems.forEach(item => {
+                brickObserver.observe(item);
+            });
+        });
     </script>
 </body>
 </html>
