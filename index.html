@@ -508,6 +508,9 @@
 </head>
 <body>
 
+    <!-- Background Audio Element -->
+    <audio id="bg-song" src="your-song.mp3" loop></audio>
+
     <!-- MAIN HOME PAGE INTERFACE -->
     <div id="home-view">
         <header>
@@ -522,9 +525,7 @@
         </header>
 
         <div class="status-container">
-            <div class="status-box premium-font" onclick="openPillerView()">PULLER ❤️‍🔥
-          
-      </div>
+            <div class="status-box premium-font" onclick="openPillerView()">PULLER ❤️‍🔥</div>
         </div>
 
         <div class="batch-label">Official +1 2026-28</div>
@@ -687,11 +688,22 @@
     </footer>
 
     <script>
+        const bgSong = document.getElementById('bg-song');
+
+        function playAudio() {
+            if (bgSong && bgSong.paused) {
+                bgSong.play().catch(error => {
+                    console.log("Autoplay prevented by browser configuration.");
+                });
+            }
+        }
+
         function openPillerView() {
             document.getElementById('home-view').style.display = 'none';
             document.getElementById('piller-view').style.display = 'block';
             window.scrollTo(0, 0);
             window.dispatchEvent(new Event('scroll'));
+            playAudio();
         }
 
         function closePillerView() {
@@ -704,6 +716,10 @@
             const viewer = document.getElementById('mediaViewer');
             const content = document.getElementById('viewerContent');
             
+            if (type === 'video') {
+                bgSong.volume = 0.2; 
+            }
+
             if (type === 'img') {
                 const src = cardElement.querySelector('img').src;
                 content.innerHTML = `<img src="${src}" alt="Fullscreen View">`;
@@ -719,9 +735,12 @@
             const viewer = document.getElementById('mediaViewer');
             document.getElementById('viewerContent').innerHTML = '';
             viewer.style.display = 'none';
+            bgSong.volume = 1.0;
         }
 
         document.addEventListener("DOMContentLoaded", function () {
+            document.body.addEventListener('click', playAudio, { once: true });
+
             const animatableItems = document.querySelectorAll(".gallery-container .card, .piller-grid .piller-card");
             
             const observerOptions = {
