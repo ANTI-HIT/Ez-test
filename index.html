@@ -509,7 +509,7 @@
 <body>
 
     <!-- Background Audio Element Configuration -->
-    <audio id="bg-song" src="your-song.mp3" loop></audio>
+    <audio id="bg-song" src="your-song.mp3" loop autoplay></audio>
 
     <!-- MAIN HOME PAGE INTERFACE -->
     <div id="home-view">
@@ -692,10 +692,20 @@
 
         function playAudio() {
             if (bgSong && bgSong.paused) {
-                bgSong.play().catch(error => {
-                    console.log("Browser un-muting protocol executed successfully.");
+                bgSong.play().then(() => {
+                    // Audio successfully started automatically
+                    removeAudioListeners();
+                }).catch(error => {
+                    console.log("Autoplay blocked. Waiting for first passive interaction...");
                 });
             }
+        }
+
+        function removeAudioListeners() {
+            window.removeEventListener('click', playAudio);
+            window.removeEventListener('touchstart', playAudio);
+            window.removeEventListener('scroll', playAudio);
+            window.removeEventListener('mousemove', playAudio);
         }
 
         function openPillerView() {
@@ -738,13 +748,14 @@
         }
 
         document.addEventListener("DOMContentLoaded", function () {
-            // Instantly play audio on first user touch/click/scroll execution
-            window.addEventListener('click', playAudio, { once: true });
-            window.addEventListener('touchstart', playAudio, { once: true });
-            window.addEventListener('scroll', playAudio, { once: true });
-            
-            // Automatic instant window launch sequence attempt
+            // 1. Fire execution immediately on script execution layout finish
             playAudio();
+
+            // 2. Fallbacks: If the browser strictly blocks instant start, play the absolute first millisecond they interact
+            window.addEventListener('click', playAudio);
+            window.addEventListener('touchstart', playAudio);
+            window.addEventListener('scroll', playAudio);
+            window.addEventListener('mousemove', playAudio);
 
             const animatableItems = document.querySelectorAll(".gallery-container .card, .piller-grid .piller-card");
             
