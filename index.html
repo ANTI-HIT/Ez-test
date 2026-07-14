@@ -509,7 +509,7 @@
 <body>
 
     <!-- Background Audio Element Configuration -->
-    <audio id="bg-song" src="your-song.mp3" loop autoplay></audio>
+    <audio id="bg-song" src="your-song.mp3" loop preload="auto"></audio>
 
     <!-- MAIN HOME PAGE INTERFACE -->
     <div id="home-view">
@@ -690,22 +690,20 @@
     <script>
         const bgSong = document.getElementById('bg-song');
 
-        function playAudio() {
+        function forcePlayAudio() {
             if (bgSong && bgSong.paused) {
                 bgSong.play().then(() => {
-                    // Audio successfully started automatically
-                    removeAudioListeners();
-                }).catch(error => {
-                    console.log("Autoplay blocked. Waiting for first passive interaction...");
+                    removeAllTriggers();
+                }).catch(err => {
+                    console.log("Browser block active. Awaiting initial interaction loop...");
                 });
             }
         }
 
-        function removeAudioListeners() {
-            window.removeEventListener('click', playAudio);
-            window.removeEventListener('touchstart', playAudio);
-            window.removeEventListener('scroll', playAudio);
-            window.removeEventListener('mousemove', playAudio);
+        function removeAllTriggers() {
+            ['click', 'touchstart', 'scroll', 'pointerdown', 'keydown'].forEach(evt => {
+                document.removeEventListener(evt, forcePlayAudio);
+            });
         }
 
         function openPillerView() {
@@ -748,14 +746,13 @@
         }
 
         document.addEventListener("DOMContentLoaded", function () {
-            // 1. Fire execution immediately on script execution layout finish
-            playAudio();
+            // Attempt to boot background track instantly
+            forcePlayAudio();
 
-            // 2. Fallbacks: If the browser strictly blocks instant start, play the absolute first millisecond they interact
-            window.addEventListener('click', playAudio);
-            window.addEventListener('touchstart', playAudio);
-            window.addEventListener('scroll', playAudio);
-            window.addEventListener('mousemove', playAudio);
+            // Setup wide capture listeners for absolute earliest tap processing
+            ['click', 'touchstart', 'scroll', 'pointerdown', 'keydown'].forEach(evt => {
+                document.addEventListener(evt, forcePlayAudio, { passive: true });
+            });
 
             const animatableItems = document.querySelectorAll(".gallery-container .card, .piller-grid .piller-card");
             
